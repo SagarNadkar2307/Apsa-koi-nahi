@@ -1,343 +1,178 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Good Morning Chiku ❤️</title>
 
-    <title>Sagar ❤️ Apurva</title>
-
-    <style>
-      body {
+  <style>
+    body {
         margin: 0;
-        font-family: Arial, sans-serif;
+        font-family: 'Segoe UI', sans-serif;
+        text-align: center;
         overflow: hidden;
-        background: linear-gradient(135deg, #ff758c, #ff7eb3);
+
+        background:
+            linear-gradient(rgba(255,182,193,0.5), rgba(255,228,196,0.5)),
+            url('morning.jpg');  /* 👈 add your image */
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    @keyframes gradient {
+        0% {background-position: 0%}
+        50% {background-position: 100%}
+        100% {background-position: 0%}
+    }
+
+    .container {
+        padding: 20px;
+        color: white;
+        display: none;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    p {
+        font-size: 1.2em;
+    }
+
+    /* Start screen */
+    .start-screen {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: black;
+        color: white;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        transition: background 0.5s;
-      }
+        flex-direction: column;
+        font-size: 1.5em;
+        z-index: 10;
+    }
 
-      /* Glass container */
-      .container {
-        text-align: center;
-        color: white;
-        background: rgba(255, 255, 255, 0.15);
-        padding: 30px;
-        border-radius: 20px;
-        backdrop-filter: blur(10px);
-        animation: fadeIn 1.5s ease;
-        max-width: 90%;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      /* Buttons */
-      button {
-        padding: 12px 25px;
-        font-size: 18px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        margin: 10px;
-        transition: 0.3s ease;
-      }
-
-      #yesBtn {
-        background: white;
-        color: #ff4b7d;
-        font-weight: bold;
-      }
-
-      #noBtn {
-        background: #ff4b7d;
-        color: white;
-      }
-
-      /* Hidden */
-      .hidden {
-        display: none;
-      }
-
-      /* Image */
-      #ourPhoto {
-        width: 280px;
-        border-radius: 15px;
+    /* Slideshow */
+    .slideshow {
         margin-top: 20px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-      }
+        width: 90%;
+        max-width: 350px;
+        height: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        background: rgba(0,0,0,0.2);
+    }
 
-      /* Floating hearts */
-      #hearts span {
-        position: fixed;
-        bottom: -50px;
-        font-size: 24px;
-        animation: floatUp linear forwards;
-      }
+    .slideshow {
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(10px);
+    }
 
-      @keyframes floatUp {
+    .slideshow img {
+        max-width: 100%;
+        max-height: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* 🔥 center fix */
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+    }
+
+    .slideshow img.active {
+        opacity: 1;
+    }
+
+    /* Hearts */
+    .heart {
+        position: absolute;
+        color: red;
+        animation: floatUp 5s linear infinite;
+    }
+
+    @keyframes floatUp {
+        from {
+            transform: translateY(100vh);
+            opacity: 1;
+        }
         to {
-          transform: translateY(-110vh);
-          opacity: 0;
+            transform: translateY(-10vh);
+            opacity: 0;
         }
-      }
-
-      /* Confetti */
-      .confetti {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        top: -10px;
-        animation: fall linear forwards;
-      }
-
-      @keyframes fall {
-        to {
-          transform: translateY(100vh);
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-    <div id="hearts"></div>
-
-    <div class="container">
-      <!-- Sorry Screen -->
-      <div id="sorryScreen">
-        <h1>I'm Sorry Chiku 💔</h1>
-
-        <p>
-          I know I missed wishing you... not once, not twice, but three
-          times.<br /><br />
-          But one thing I never missed is that you are my one and only Chiku
-          ❤️<br /><br />
-          You are the best part of my life.<br /><br />
-          Happy Valentine’s Day, my Chiku 🌹<br /><br />
-          – #Apsa_Koi_Nahi
-        </p>
-
-        <button onclick="showInvite()">Click to continue ❤️</button>
-      </div>
-
-      <!-- Invite Screen -->
-      <div id="inviteScreen" class="hidden">
-        <h1>No_Pet_Name ❤️ Chiku</h1>
-        <h1>#Apsa_Koi_Nahi</h1>
-
-        <h2>Will you be my ChikuMilk Shake? <span id="emoji">❤️</span></h2>
-
-        <button id="yesBtn" onclick="yesClicked()">YES</button>
-
-        <button id="noBtn" onclick="noClicked()">NO</button>
-
-        <h3 id="typingText"></h3>
-
-        <div id="message" class="hidden"></div>
-
-        <img id="ourPhoto" class="hidden" src="photo.jpg" />
-      </div>
-    </div>
-
-    <audio id="song" src="song.mp3"></audio>
-
-    <script>
-      /* Floating hearts */
-      setInterval(() => {
-        let heart = document.createElement("span");
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.animationDuration = Math.random() * 3 + 3 + "s";
-        document.getElementById("hearts").appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-      }, 300);
-
-      /* Transition */
-      function showInvite() {
-        document.getElementById("sorryScreen").classList.add("hidden");
-        document.getElementById("inviteScreen").classList.remove("hidden");
-      }
-
-      /* Typing effect */
-      let text = "You are the best thing that ever happened to me ❤️";
-      let i = 0;
-
-      function typeWriter() {
-        if (i < text.length) {
-          document.getElementById("typingText").innerHTML += text.charAt(i);
-
-          i++;
-
-          setTimeout(typeWriter, 50);
-        }
-      }
-
-      /* Slideshow */
-      let photos = [
-        "photo.jpg",
-        "photo1.jpg",
-        "photo2.jpg",
-        "photo3.jpg",
-        "photo4.jpg",
-        "photo5.jpg",
-      ];
-
-      let index = 0;
-
-      function startSlideshow() {
-        let img = document.getElementById("ourPhoto");
-
-        setInterval(() => {
-          index = (index + 1) % photos.length;
-
-          img.src = photos[index];
-        }, 2000);
-      }
-
-      /* YES click */
-      function yesClicked() {
-        removeLizard();
-
-        let message = document.getElementById("message");
-
-        message.innerHTML =
-          "By clicking YES you agree to:<br><br>" +
-          "• Unlimited cuddles & Kuchi Kuchi 🤗<br>" +
-          "• Lifetime Yes to Nudu Nudu Time 😄<br>" +
-          "• Mutual Bathing rights 😄<br><br>" +
-          "Effective immediately! 🚀";
-
-        message.classList.remove("hidden");
-
-        document.getElementById("ourPhoto").classList.remove("hidden");
-
-        document.getElementById("song").play();
-
-        typeWriter();
-
-        startSlideshow();
-
-        startConfetti();
-      }
-
-      /* NO logic */
-
-      let yesScale = 1;
-
-      let lizardScale = 1;
-
-      let noClickCount = 0;
-
-      function noClicked() {
-        noClickCount++;
-
-        /* Grow YES button */
-        yesScale += 0.15;
-
-        let yesBtn = document.getElementById("yesBtn");
-
-        yesBtn.style.transform = "scale(" + yesScale + ")";
-
-        /* Show jumping lizard */
-        showLizard();
-
-        /* Change emoji */
-        if (noClickCount >= 3) {
-          document.getElementById("emoji").innerText = "😭";
-        }
-
-        /* Change background */
-        document.body.style.background = `linear-gradient(135deg,
-
-hsl(${Math.random() * 360},70%,70%),
-
-hsl(${Math.random() * 360},70%,75%)
-
-)`;
-      }
-
-      /* Lizard jump + grow */
-      function showLizard() {
-        let lizard = document.getElementById("lizard");
-
-        if (!lizard) {
-          lizard = document.createElement("div");
-
-          lizard.id = "lizard";
-
-          lizard.innerHTML = "🦎";
-
-          lizard.style.position = "fixed";
-
-          lizard.style.zIndex = "999";
-
-          lizard.style.transition = "all 0.4s ease";
-
-          document.body.appendChild(lizard);
-        }
-
-        /* increase size */
-        lizardScale += 0.2;
-
-        lizard.style.fontSize = 40 * lizardScale + "px";
-
-        /* random position */
-        let x = Math.random() * (window.innerWidth - 100);
-
-        let y = Math.random() * (window.innerHeight - 100);
-
-        lizard.style.left = x + "px";
-
-        lizard.style.top = y + "px";
-      }
-
-      /* Remove lizard */
-      function removeLizard() {
-        let lizard = document.getElementById("lizard");
-
-        if (lizard) {
-          lizard.remove();
-        }
-      }
-
-      /* Confetti */
-      function startConfetti() {
-        let duration = 5000;
-
-        let end = Date.now() + duration;
-
-        let interval = setInterval(() => {
-          if (Date.now() > end) {
-            clearInterval(interval);
-
-            return;
-          }
-
-          let confetti = document.createElement("div");
-
-          confetti.className = "confetti";
-
-          confetti.style.left = Math.random() * window.innerWidth + "px";
-
-          confetti.style.background = `hsl(${Math.random() * 360},100%,50%)`;
-
-          confetti.style.animationDuration = Math.random() * 3 + 2 + "s";
-
-          document.body.appendChild(confetti);
-
-          setTimeout(() => confetti.remove(), 5000);
-        }, 50);
-      }
-    </script>
-  </body>
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Start Screen -->
+<div class="start-screen" onclick="startExperience()">
+  💖 Tap to open your surprise 💖
+</div>
+
+<!-- Music -->
+<audio id="bgMusic" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container" id="mainContent">
+  <h1>Good Morning Chiku ❤️</h1>
+  <p>
+    My cutie, my bestest BooBoo, my Sexy wife 💕 <br><br>
+    I Miss You 💔 <br>
+    You are the most beautiful and my bestest PomPom 🌸 <br><br>
+    I love you more than anything ❤️
+  </p>
+
+  <div class="slideshow">
+    <img src="photo1.jpg" class="active">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+    <img src="photo5.jpg">
+  </div>
+</div>
+
+<script>
+  function startExperience() {
+      document.querySelector(".start-screen").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+
+      let music = document.getElementById("bgMusic");
+      music.play(); // ✅ now works after user click
+  }
+
+  // Slideshow
+  let slides = document.querySelectorAll(".slideshow img");
+  let index = 0;
+
+  setInterval(() => {
+      slides[index].classList.remove("active");
+      index = (index + 1) % slides.length;
+      slides[index].classList.add("active");
+  }, 3000);
+
+  // Hearts
+  function createHeart() {
+      let heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 20 + 10) + "px";
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 5000);
+  }
+
+  setInterval(createHeart, 300);
+</script>
+
+</body>
 </html>
